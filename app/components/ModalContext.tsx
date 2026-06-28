@@ -1,0 +1,83 @@
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import type { ReactNode } from "react";
+import { X } from "lucide-react";
+import { SignupForm } from "./SignupForm";
+
+type ModalCtx = { open: () => void; close: () => void };
+
+const Ctx = createContext<ModalCtx | null>(null);
+
+export function useModal() {
+  const ctx = useContext(Ctx);
+  if (!ctx) {
+    throw new Error("useModal deve ser usado dentro de ModalProvider");
+  }
+  return ctx;
+}
+
+export function ModalProvider({ children }: { children: ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, close]);
+
+  return (
+    <Ctx.Provider value={{ open, close }}>
+      {children}
+
+      {isOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Garanta sua vaga gratuita"
+        >
+          <div
+            className="absolute inset-0 animate-modal-fade bg-black/90" style={{ backdropFilter: "blur(5px)" }}
+            onClick={close}
+          />
+          <div className="relative z-10 max-h-[92vh] w-full max-w-md animate-modal-in overflow-y-auto rounded-2xl border border-border bg-surface-2/95 px-7 py-8 card-glow sm:p-10">
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Fechar"
+              className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white/5 text-muted transition-colors hover:border-green-400/50 hover:text-green-50 sm:right-4 sm:top-4 sm:h-9 sm:w-9"
+            >
+              <X className="h-4 w-4" strokeWidth={1.3} aria-hidden />
+            </button>
+
+            <h2 className="pr-10 font-display text-lg font-semibold tracking-tight text-green-50 sm:text-xl">
+              Garanta sua vaga gratuita
+            </h2>
+            <p className="mt-1 text-sm text-muted">
+              Preencha seus dados para receber o acesso ao evento.
+            </p>
+            <div className="mt-5 sm:mt-6">
+              <SignupForm buttonLabel="Participar do evento" />
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </Ctx.Provider>
+  );
+}
