@@ -8,7 +8,7 @@ export function CtaBanner() {
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
         style={{ backgroundImage: "url('/background.png')" }}
       />
-      <div className="pointer-events-none absolute inset-0 bg-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-black/60" />
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         <Reveal>
           <h2 className="font-display text-2xl font-extrabold leading-[1.15] tracking-tight sm:text-4xl">
@@ -27,7 +27,7 @@ export function CtaBanner() {
           <div className="mt-10 flex flex-col items-center gap-6">
             <EventButton>Quero participar do Plano Escala</EventButton>
             <p className="text-xs text-muted sm:text-sm">
-              Evento gratuito. O acesso será enviado pelo grupo oficial da Xingyu.
+              Evento gratuito. O acesso será enviado pelo grupo oficial.
             </p>
           </div>
         </Reveal>

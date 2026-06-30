@@ -72,15 +72,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
                   <X className="h-4 w-4" strokeWidth={1.3} aria-hidden />
                 </button>
 
-                <h2 className="pr-10 font-display text-lg font-semibold tracking-tight text-white sm:text-xl">
-                  Garanta sua vaga gratuita
-                </h2>
-                <p className="mt-1 text-sm text-muted">
-                  Preencha seus dados para receber o acesso ao evento.
-                </p>
-                <div className="mt-5 sm:mt-6">
-                  <SignupForm buttonLabel="Participar do evento" />
-                </div>
+                <SignupForm buttonLabel="Participar do evento" />
               </div>
             </div>,
             document.body

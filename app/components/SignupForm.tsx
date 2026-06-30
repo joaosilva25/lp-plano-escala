@@ -88,7 +88,14 @@ export function SignupForm({
   }
 
   return (
-    <form className="w-full" onSubmit={handleSubmit}>
+    <>
+      <h2 className="pr-10 font-display text-lg font-semibold tracking-tight text-white sm:text-xl">
+        Garanta sua vaga gratuita
+      </h2>
+      <p className="mt-1 text-sm text-muted">
+        Preencha seus dados para receber o acesso ao evento.
+      </p>
+      <form className="mt-5 w-full sm:mt-6" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-3">
         <input
           type="text"
@@ -177,5 +184,6 @@ export function SignupForm({
         Evento gratuito. Seus dados estão protegidos.
       </p>
     </form>
+    </>
   );
 }
