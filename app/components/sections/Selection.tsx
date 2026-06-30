@@ -44,16 +44,8 @@ function SelectionCard({ image }: { image: string }) {
       <img
         src={image}
         alt=""
-        className="absolute inset-0 h-full w-full scale-105 object-cover brightness-[0.62] saturate-[0.72] contrast-[0.92]"
+        className="h-full w-full object-cover"
       />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 10%, rgba(0,0,0,0.65) 100%)",
-        }}
-      />
-      <div className="absolute inset-0 bg-green-950/15" />
     </div>
   );
 }
@@ -82,11 +74,11 @@ function CarouselRow({
 
   return (
     <div className="overflow-hidden" ref={emblaRef}>
-      <div className="-ml-4 flex">
+      <div className="-ml-3 flex sm:-ml-4">
         {items.map((label, i) => (
           <div
             key={label}
-            className="min-w-0 flex-[0_0_45%] pl-4 sm:flex-[0_0_30%] lg:flex-[0_0_20%]"
+            className="min-w-0 flex-[0_0_58%] pl-3 sm:flex-[0_0_30%] sm:pl-4 lg:flex-[0_0_20%]"
           >
             <SelectionCard
               image={
@@ -114,7 +106,7 @@ export function Selection() {
       </div>
 
       <Reveal delay={120}>
-        <div className="mt-14 flex flex-col gap-4">
+        <div className="mt-14 flex flex-col gap-5 sm:gap-4">
           <CarouselRow items={rowTop} direction="forward" imageOffset={0} />
           <CarouselRow items={rowBottom} direction="backward" imageOffset={2} />
         </div>

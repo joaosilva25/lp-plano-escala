@@ -3,7 +3,7 @@ import { EventButton, SectionTag } from "../ui";
 
 export function Mentor() {
   return (
-    <section className="relative overflow-hidden bg-surface/25 py-20 sm:py-28">
+    <section className="relative overflow-hidden bg-surface/25 pt-10 pb-16 md:py-28">
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 xl:gap-20">
           <Reveal>
