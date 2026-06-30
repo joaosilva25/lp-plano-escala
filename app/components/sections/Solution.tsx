@@ -1,19 +1,22 @@
 import { Reveal } from "../Reveal";
-import { EventButton, ImagePlaceholder, SectionHeading } from "../ui";
+import { EventButton, SectionHeading } from "../ui";
 
 const cards = [
   {
     n: "01",
+    image: "/IMG1.png",
     title: "A cliente precisa perceber desejo.",
     text: "Precisa entender por que aquela peça combina com ela. Precisa ver possibilidade de uso. Precisa sentir confiança. E você precisa saber escolher produtos que tenham mais chance de girar.",
   },
   {
     n: "02",
+    image: "/IMG2.png",
     title: "É isso que muda o jogo.",
     text: "Quando você une boas peças, uma oferta clara e uma forma simples de divulgar todos os dias, a venda deixa de ser um acontecimento isolado e começa a virar processo.",
   },
   {
     n: "03",
+    image: "/IMG4.png",
     title: "O Plano Escala foi criado para mostrar esse caminho:",
     text: "como sair do improviso e começar a vender semijoias com mais consciência, mais estratégia e mais constância usando a internet.",
   },
@@ -21,7 +24,9 @@ const cards = [
 
 export function Solution() {
   return (
-    <section className="relative mx-auto max-w-6xl px-6 py-24">
+    <section className="relative overflow-hidden py-24">
+      <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
+      <div className="relative mx-auto max-w-6xl px-6">
       <Reveal>
         <SectionHeading
           tag="A virada"
@@ -56,10 +61,13 @@ export function Solution() {
 
                 <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-2">
                   <div className={imageRight ? "lg:order-2" : "lg:order-1"}>
-                    <ImagePlaceholder
-                      label="Imagem"
-                      aspect="aspect-[4/3]"
-                    />
+                    <div className="aspect-[4/3] w-full overflow-hidden rounded-lg ring-soft">
+                      <img
+                        src={card.image}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   </div>
                   <div className={imageRight ? "lg:order-1" : "lg:order-2"}>
                     <h3 className="font-display text-xl font-semibold leading-snug tracking-tight text-green-50 sm:text-2xl">
@@ -81,6 +89,7 @@ export function Solution() {
           <EventButton>Quero participar do evento</EventButton>
         </div>
       </Reveal>
+      </div>
     </section>
   );
 }

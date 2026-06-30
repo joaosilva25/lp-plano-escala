@@ -1,6 +1,9 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { Reveal } from "../Reveal";
 import { SectionHeading } from "../ui";
-import { Check } from "lucide-react";
 
 type LearnItem = { title: string; text: string };
 type Day = {
@@ -8,6 +11,7 @@ type Day = {
   badge: string;
   title: string;
   intro: string;
+  image: string;
   items: LearnItem[];
 };
 
@@ -16,6 +20,7 @@ const days: Day[] = [
     day: "01",
     badge: "Peça bonita não vende sozinha",
     title: "O erro que trava suas vendas de semijoias na internet",
+    image: "/IMG1.png",
     intro:
       "No primeiro dia, vamos mostrar o erro que trava muitas revendedoras: comprar boas peças, postar no Instagram ou no WhatsApp e esperar que as vendas aconteçam sozinhas. Você vai entender por que algumas peças ficam paradas, por que algumas postagens não geram resposta e por que vender semijoias todos os dias exige mais do que ter produto bonito.",
     items: [
@@ -37,6 +42,7 @@ const days: Day[] = [
     day: "02",
     badge: "Crie desejo e gere mais pedidos",
     title: "Como usar a internet para criar desejo e gerar mais pedidos",
+    image: "/IMG2.png",
     intro:
       "No segundo dia, o foco será mostrar como transformar Instagram, WhatsApp e conteúdo simples em ferramentas reais de venda. Não é sobre virar influencer, aparecer o tempo todo ou fazer coisas difíceis. É sobre saber o que falar, como mostrar suas peças e como fazer a cliente enxergar valor antes de perguntar o preço.",
     items: [
@@ -58,6 +64,7 @@ const days: Day[] = [
     day: "03",
     badge: "Plano Escala",
     title: "Como escolher peças com mais saída e vender semijoias todos os dias",
+    image: "/IMG4.png",
     intro:
       "No terceiro dia, Leo China vai conectar tudo: produto, internet, rotina de venda e oportunidade comercial. Também será apresentada a nova seleção de peças mais vendidas da Xingyu, criada para ajudar revendedoras e lojistas a comprarem com mais segurança e escolherem modelos com maior potencial de saída.",
     items: [
@@ -77,11 +84,82 @@ const days: Day[] = [
   },
 ];
 
+function DayCard({ day }: { day: Day }) {
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-surface/80">
+      <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden">
+        <img
+          src={day.image}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface via-surface/80 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <img
+            src="/logo.png"
+            alt="Plano Escala"
+            className="h-5 w-auto opacity-90"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col px-5 pb-6 pt-4 text-center md:text-left">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-green-400">
+          Dia {day.day} — {day.badge}
+        </p>
+        <h3 className="mt-2 font-display text-lg font-semibold leading-snug tracking-tight text-white lg:text-xl">
+          {day.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-white/75">{day.intro}</p>
+
+        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-green-300">
+          O que você vai aprender:
+        </p>
+        <ul className="mt-4 flex flex-col gap-4">
+          {day.items.map((item) => (
+            <li key={item.title}>
+              <h4 className="text-sm font-semibold leading-snug text-white">
+                {item.title}
+              </h4>
+              <p className="mt-1.5 text-xs leading-relaxed text-white/60 sm:text-sm">
+                {item.text}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
+}
+
 export function WhatYouLearn() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    active: true,
+    breakpoints: {
+      "(min-width: 768px)": { active: false },
+    },
+  });
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [selected, setSelected] = useState(0);
+
+  const onSelect = useCallback((api: NonNullable<typeof emblaApi>) => {
+    setSelected(api.selectedScrollSnap());
+  }, []);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    onSelect(emblaApi);
+    emblaApi.on("select", onSelect).on("reInit", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect).off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
   return (
     <section className="relative overflow-hidden py-24">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[60%] -translate-x-1/2 glow-beam" />
-      <div className="relative mx-auto max-w-5xl px-6">
+      <div className="relative mx-auto max-w-7xl px-6">
         <Reveal>
           <SectionHeading
             tag="3 dias de evento"
@@ -90,53 +168,34 @@ export function WhatYouLearn() {
           />
         </Reveal>
 
-        <div className="mt-16 space-y-10">
-          {days.map((d, i) => (
-            <Reveal key={d.day} delay={(i % 2) * 120}>
-              <article className="overflow-hidden rounded-xl border border-border bg-surface/60 card-glow">
-                <div className="flex flex-col gap-4 border-b border-border bg-green-500/5 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8">
-                  <span className="flex h-16 w-16 flex-none items-center justify-center rounded-lg bg-green-500/15 font-display text-2xl font-extrabold text-gradient-green">
-                    {d.day}
-                  </span>
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-green-300">
-                      Dia {d.day} — {d.badge}
-                    </span>
-                    <h3 className="mt-1 font-display text-xl font-semibold leading-snug tracking-tight text-green-50 sm:text-2xl">
-                      {d.title}
-                    </h3>
-                  </div>
+        <Reveal delay={120}>
+          <div className="mt-16 overflow-hidden md:overflow-visible" ref={emblaRef}>
+            <div className="-ml-6 flex md:ml-0 md:grid md:grid-cols-3 md:gap-5 lg:gap-6">
+              {days.map((d) => (
+                <div
+                  key={d.day}
+                  className="min-w-0 flex-[0_0_88%] pl-6 md:flex-none md:pl-0"
+                >
+                  <DayCard day={d} />
                 </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
 
-                <div className="p-6 sm:p-8">
-                  <p className="text-sm sm:text-base leading-relaxed text-muted">
-                    {d.intro}
-                  </p>
-
-                  <p className="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-green-300">
-                    O que você vai aprender:
-                  </p>
-                  <ul className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
-                    {d.items.map((item) => (
-                      <li
-                        key={item.title}
-                        className="rounded-lg border border-border bg-surface-2/60 p-5"
-                      >
-                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-green-500/20 text-green-300">
-                          <Check className="h-4 w-4" strokeWidth={1.3} aria-hidden />
-                        </span>
-                        <h4 className="mt-4 font-display text-sm font-semibold leading-snug text-green-50">
-                          {item.title}
-                        </h4>
-                        <p className="mt-2 text-sm leading-relaxed text-muted">
-                          {item.text}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            </Reveal>
+        <div className="mt-8 flex justify-center gap-2 md:hidden">
+          {scrollSnaps.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Ir para o slide ${i + 1}`}
+              onClick={() => emblaApi?.scrollTo(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === selected
+                  ? "w-6 bg-green-400"
+                  : "w-2 bg-border hover:bg-green-400/50"
+              }`}
+            />
           ))}
         </div>
       </div>

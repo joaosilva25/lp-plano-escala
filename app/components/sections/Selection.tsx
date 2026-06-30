@@ -3,7 +3,18 @@
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { Reveal } from "../Reveal";
-import { EventButton, ImagePlaceholder, SectionHeading } from "../ui";
+import { EventButton, SectionHeading } from "../ui";
+
+const carouselImages = [
+  "/carousel1.jpg",
+  "/carousel2.jpg",
+  "/carousel3.jpg",
+  "/carousel4.jpg",
+  "/carousel5.webp",
+  "/carousel6.jpg",
+  "/carousel7.webp",
+  "/carousel8.webp",
+];
 
 const rowTop = [
   "Colar",
@@ -27,12 +38,34 @@ const rowBottom = [
   "Brinco Argola",
 ];
 
+function SelectionCard({ image }: { image: string }) {
+  return (
+    <div className="relative aspect-square overflow-hidden rounded-lg ring-soft">
+      <img
+        src={image}
+        alt=""
+        className="absolute inset-0 h-full w-full scale-105 object-cover brightness-[0.62] saturate-[0.72] contrast-[0.92]"
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 10%, rgba(0,0,0,0.65) 100%)",
+        }}
+      />
+      <div className="absolute inset-0 bg-green-950/15" />
+    </div>
+  );
+}
+
 function CarouselRow({
   items,
   direction,
+  imageOffset = 0,
 }: {
   items: string[];
   direction: "forward" | "backward";
+  imageOffset?: number;
 }) {
   const [emblaRef] = useEmblaCarousel(
     { loop: true, dragFree: true, align: "start", containScroll: false },
@@ -50,15 +83,15 @@ function CarouselRow({
   return (
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="-ml-4 flex">
-        {items.map((label) => (
+        {items.map((label, i) => (
           <div
             key={label}
             className="min-w-0 flex-[0_0_45%] pl-4 sm:flex-[0_0_30%] lg:flex-[0_0_20%]"
           >
-            <ImagePlaceholder
-              label={label}
-              aspect="aspect-square"
-              className="card-glow"
+            <SelectionCard
+              image={
+                carouselImages[(imageOffset + i) % carouselImages.length]
+              }
             />
           </div>
         ))}
@@ -69,8 +102,7 @@ function CarouselRow({
 
 export function Selection() {
   return (
-    <section className="relative overflow-hidden border-y border-border bg-surface/40 py-24">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[60%] -translate-x-1/2 glow-beam" />
+    <section className="relative overflow-hidden bg-surface/40 py-24">
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal>
           <SectionHeading
@@ -83,14 +115,14 @@ export function Selection() {
 
       <Reveal delay={120}>
         <div className="mt-14 flex flex-col gap-4">
-          <CarouselRow items={rowTop} direction="forward" />
-          <CarouselRow items={rowBottom} direction="backward" />
+          <CarouselRow items={rowTop} direction="forward" imageOffset={0} />
+          <CarouselRow items={rowBottom} direction="backward" imageOffset={2} />
         </div>
       </Reveal>
 
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal delay={160}>
-          <div className="mt-12 flex flex-col items-center gap-4">
+          <div className="mt-12 flex flex-col items-center gap-6">
             <EventButton>Quero participar do evento</EventButton>
             <p className="text-center text-xs text-muted sm:text-sm">
               Entre no grupo oficial para receber o acesso e os avisos do evento.

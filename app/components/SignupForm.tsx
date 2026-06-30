@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 
 const LEAD_ENDPOINT = "/api/lead";
 
@@ -98,7 +98,7 @@ export function SignupForm({
           onChange={(e) => setNome(e.target.value)}
           placeholder="Seu nome"
           autoComplete="name"
-          className="h-12 w-full rounded-md border border-border bg-white/5 px-4 text-sm text-green-50 outline-none transition-colors placeholder:text-muted/70 focus:border-green-400/60 focus:bg-white/[0.07]"
+          className="h-12 w-full rounded-md border border-border bg-white px-4 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-600 focus:border-green-400/60"
         />
         <input
           type="tel"
@@ -109,7 +109,7 @@ export function SignupForm({
           placeholder="Seu telefone (WhatsApp)"
           autoComplete="tel"
           inputMode="tel"
-          className="h-12 w-full rounded-md border border-border bg-white/5 px-4 text-sm text-green-50 outline-none transition-colors placeholder:text-muted/70 focus:border-green-400/60 focus:bg-white/[0.07]"
+          className="h-12 w-full rounded-md border border-border bg-white px-4 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-600 focus:border-green-400/60"
         />
       </div>
 
@@ -173,8 +173,7 @@ export function SignupForm({
         </p>
       ) : null}
 
-      <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted">
-        <ShieldCheck className="h-3.5 w-3.5 text-green-400" strokeWidth={1.3} aria-hidden />
+      <p className="mt-4 text-center text-xs text-white">
         Evento gratuito. Seus dados estão protegidos.
       </p>
     </form>

@@ -56,7 +56,7 @@ export function Benefits() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative mx-auto max-w-7xl px-6 py-24">
+    <section className="relative mx-auto max-w-7xl px-6 pt-6 pb-20">
       <Reveal>
         <SectionHeading
           tag="Por que participar"

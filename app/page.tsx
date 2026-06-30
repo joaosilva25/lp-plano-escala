@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="relative w-full overflow-x-hidden">
       <Hero />
-      <Video />
+      {/* <Video /> */}
       <Problems />
       <Solution />
       <Benefits />

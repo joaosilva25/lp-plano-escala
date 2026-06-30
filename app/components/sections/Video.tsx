@@ -6,7 +6,6 @@ export function Video() {
   return (
     <section className="relative overflow-hidden py-24">
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[60%] -translate-x-1/2 glow-beam" />
       <div className="relative mx-auto max-w-4xl px-6">
         {/* SESSÃO 3 */}
         <Reveal>

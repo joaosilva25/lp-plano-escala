@@ -74,7 +74,7 @@ export function Problems() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <section className="relative overflow-hidden border-y border-border bg-surface/40 py-24">
+    <section className="relative overflow-hidden bg-surface/40 py-24">
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal>
           <SectionHeading

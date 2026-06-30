@@ -3,9 +3,13 @@ import { EventButton } from "../ui";
 
 export function CtaBanner() {
   return (
-    <section className="relative overflow-hidden border-y border-border bg-surface/40 py-24">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[60%] -translate-x-1/2 glow-beam" />
-      <div className="relative mx-auto max-w-3xl px-6 text-center">
+    <section className="relative overflow-hidden py-24">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+        style={{ backgroundImage: "url('/background.png')" }}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-black/70" />
+      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         <Reveal>
           <h2 className="font-display text-2xl font-extrabold leading-[1.15] tracking-tight sm:text-4xl">
             O Plano Escala foi criado para quem quer parar de depender apenas de
@@ -20,7 +24,7 @@ export function CtaBanner() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="mt-10 flex flex-col items-center gap-6">
             <EventButton>Quero participar do Plano Escala</EventButton>
             <p className="text-xs text-muted sm:text-sm">
               Evento gratuito. O acesso será enviado pelo grupo oficial da Xingyu.

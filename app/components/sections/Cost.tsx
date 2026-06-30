@@ -40,9 +40,8 @@ export function Cost() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative overflow-hidden border-t border-border py-24">
+    <section className="relative overflow-hidden py-24">
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[70%] -translate-x-1/2 glow-beam" />
       <div className="relative mx-auto max-w-4xl px-6">
         <Reveal>
           <SectionHeading
@@ -101,7 +100,7 @@ export function Cost() {
         </Reveal>
 
         <Reveal delay={200}>
-          <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="mt-10 flex flex-col items-center gap-6">
             <EventButton>Quero minha vaga no Plano Escala</EventButton>
             <p className="text-center text-xs text-muted sm:text-sm">
               Evento gratuito. Acesso pelo grupo oficial da Xingyu.

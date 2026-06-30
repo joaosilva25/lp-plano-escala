@@ -56,7 +56,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
             className="absolute inset-0 animate-modal-fade bg-black/90" style={{ backdropFilter: "blur(5px)" }}
             onClick={close}
           />
-          <div className="relative z-10 max-h-[92vh] w-full max-w-md animate-modal-in overflow-y-auto rounded-2xl border border-border bg-surface-2/95 px-7 py-8 card-glow sm:p-10">
+          <div className="relative z-10 max-h-[92vh] w-full max-w-md animate-modal-in overflow-y-auto rounded-2xl border border-border bg-surface-2/95 px-7 py-10 modal-glow sm:px-10 sm:py-12">
             <button
               type="button"
               onClick={close}
@@ -66,7 +66,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
               <X className="h-4 w-4" strokeWidth={1.3} aria-hidden />
             </button>
 
-            <h2 className="pr-10 font-display text-lg font-semibold tracking-tight text-green-50 sm:text-xl">
+            <h2 className="pr-10 font-display text-lg font-semibold tracking-tight text-white sm:text-xl">
               Garanta sua vaga gratuita
             </h2>
             <p className="mt-1 text-sm text-muted">
