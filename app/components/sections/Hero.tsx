@@ -29,7 +29,7 @@ export function Hero() {
             <img
               src="/logo.png"
               alt="Plano Escala"
-              className="mb-8 h-11 w-auto sm:h-14"
+              className="mb-8 h-11 w-auto sm:h-14 lg:h-11"
             />
             <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl xl:text-[3.4rem]">
               Aprenda a Vender Semijoias{" "}

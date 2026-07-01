@@ -1,13 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { Check, CheckCircle2, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 
 const LEAD_ENDPOINT = "/api/lead";
+const WHATSAPP_REDIRECT = "/whatsapp";
 
 const profiles = ["Revendedor", "Varejista", "Atacadista"];
 
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "idle" | "loading" | "error";
+
+function formatPhone(value: string): string {
+  let digits = value.replace(/\D/g, "").slice(0, 11);
+
+  if (digits.length > 2 && digits[2] !== "9") {
+    digits = `${digits.slice(0, 2)}9${digits.slice(2)}`.slice(0, 11);
+  }
+
+  if (digits.length === 0) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
+function phoneDigits(value: string): string {
+  return value.replace(/\D/g, "");
+}
+
+function isValidMobilePhone(value: string): boolean {
+  const digits = phoneDigits(value);
+  return digits.length === 11 && digits[2] === "9";
+}
 
 function getUtms() {
   if (typeof window === "undefined") {
@@ -46,6 +71,12 @@ export function SignupForm({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "loading") return;
+
+    if (!isValidMobilePhone(numero)) {
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
 
     const payload = {
@@ -64,27 +95,12 @@ export function SignupForm({
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setStatus("success");
+
+      const search = window.location.search;
+      window.location.href = `${WHATSAPP_REDIRECT}${search}`;
     } catch {
       setStatus("error");
     }
-  }
-
-  if (status === "success") {
-    return (
-      <div className="flex flex-col items-center gap-3 py-6 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-green-500/15 text-green-300">
-          <CheckCircle2 className="h-8 w-8" strokeWidth={1.3} aria-hidden />
-        </span>
-        <h3 className="font-display text-lg font-semibold text-green-50">
-          Inscrição confirmada!
-        </h3>
-        <p className="text-sm text-muted">
-          Você vai receber o acesso e os avisos do evento pelo grupo oficial da
-          Xingyu.
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -112,10 +128,11 @@ export function SignupForm({
           name="telefone"
           required
           value={numero}
-          onChange={(e) => setNumero(e.target.value)}
-          placeholder="Seu telefone (WhatsApp)"
+          onChange={(e) => setNumero(formatPhone(e.target.value))}
+          placeholder="(00) 00000-0000"
           autoComplete="tel"
-          inputMode="tel"
+          inputMode="numeric"
+          maxLength={15}
           className="h-12 w-full rounded-md border border-border bg-white px-4 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-600 focus:border-green-400/60"
         />
       </div>
@@ -188,7 +205,9 @@ export function SignupForm({
 
       {status === "error" ? (
         <p className="mt-3 text-center text-xs text-red-400">
-          Não foi possível enviar agora. Tente novamente em instantes.
+          {phoneDigits(numero).length > 0 && !isValidMobilePhone(numero)
+            ? "Informe um celular válido com DDD (ex: (11) 99999-9999)."
+            : "Não foi possível enviar agora. Tente novamente em instantes."}
         </p>
       ) : null}
 
