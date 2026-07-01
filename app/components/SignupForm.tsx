@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { Check, CheckCircle2, Loader2 } from "lucide-react";
 
 const LEAD_ENDPOINT = "/api/lead";
 
@@ -124,13 +124,13 @@ export function SignupForm({
         <legend className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
           Você é:
         </legend>
-        <div className="mt-3 grid grid-cols-3 gap-2">
+        <div className="mt-3 flex flex-col gap-2 sm:grid sm:grid-cols-3">
           {profiles.map((p) => {
             const active = profile === p;
             return (
               <label
                 key={p}
-                className={`cursor-pointer rounded-md border px-2 py-2.5 text-center text-xs font-semibold transition-all ${
+                className={`flex cursor-pointer items-center justify-center gap-2 rounded-md border px-4 py-3 text-sm font-semibold transition-all sm:px-2 sm:py-2.5 sm:text-xs ${
                   active
                     ? "border-green-400/70 bg-green-500/15 text-green-50"
                     : "border-border bg-white/5 text-muted hover:border-green-400/40"
@@ -144,6 +144,11 @@ export function SignupForm({
                   onChange={() => setProfile(p)}
                   className="sr-only"
                 />
+                {active ? (
+                  <Check className="h-4 w-4 shrink-0 sm:h-3.5 sm:w-3.5" strokeWidth={2.5} aria-hidden />
+                ) : (
+                  <span className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden />
+                )}
                 {p}
               </label>
             );
